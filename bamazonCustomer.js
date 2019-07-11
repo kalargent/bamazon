@@ -1,6 +1,7 @@
 // INCLUDING NPM PACKAGES 
 var mysql = require("mysql"); 
 var inquirer = require("inquirer"); 
+var Table = require('cli-table2');
 
 // DATABASE CONNECTION VAR AND FUNCTION 
 var connection = mysql.createConnection ({
@@ -13,7 +14,7 @@ var connection = mysql.createConnection ({
 
 connection.connect(function(err) {
     if (err) throw err; 
-    console.log ("You're in Bamazon!"); 
+    // console.log ("You're in Bamazon!"); 
 })
 
 // GLOBAL VARIABLES 
@@ -27,12 +28,23 @@ function productDisplay () {
     connection.query (query, function (err, result) { 
         if (err) throw err; 
         // console.log(result); 
+
+        console.log(""); 
+        console.log(" _.~'~._.~'~._.~ WELCOME TO BAMAZON! ~._.~'~._.~'~._")
+        console.log(""); 
+        console.log(""); 
+        console.log("----------------------------------------------------")
+        console.log("Here are today's THUNDERBOLT deals! Happy Shopping!")
+        console.log("----------------------------------------------------")
+        console.log("");
+        console.log("");
         
         // var productList = []; 
         for (var i = 0; i < result.length; i++)
             // console.log(result[i].product_name); 
-            console.log(result[i].item_id, result[i].product_name, result[i].department_name, result[i].price, result[i].stock_quantity); 
-            // console.log(productList); 
+            console.log(result[i].item_id + " | ", result[i].product_name + " | ", result[i].department_name + " | ", result[i].price + " | "); 
+            // productList.push(result[i].item_id, result[i].product_name, result[i].department_name, result[i].price, result[i].stock_quantity); 
+            // console.log(productList);    
     }) 
 }
 
