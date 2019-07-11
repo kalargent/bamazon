@@ -45,7 +45,23 @@ function productDisplay () {
             console.log(result[i].item_id + " | ", result[i].product_name + " | ", result[i].department_name + " | ", result[i].price + " | "); 
             // productList.push(result[i].item_id, result[i].product_name, result[i].department_name, result[i].price, result[i].stock_quantity); 
             // console.log(productList);    
-    }) 
+    makePurchase(); 
+        }) 
+}
+
+function makePurchase () { 
+    inquirer
+        .prompt ([
+            {
+                name: "whatItem", 
+                type: "input", 
+                message: "Enter the Item Number for the item you'd like to purchase!"
+            }
+        ])
+
+        .then (function (answer) {
+            console.log("You Picked" + answer.whatItem); 
+        })
 }
 
 // function welcome () { 
