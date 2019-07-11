@@ -56,11 +56,17 @@ function makePurchase () {
                 name: "whatItem", 
                 type: "input", 
                 message: "Enter the Item Number for the item you'd like to purchase!"
+            }, 
+            {
+                name: "qty",
+                type: "input", 
+                message: "How many do you want?"
             }
         ])
 
         .then (function (answer) {
-            console.log("You Picked" + answer.whatItem); 
+            console.log("You Picked " + answer.whatItem);
+            console.log ("You want to purchase " + answer.qty);  
         })
 }
 
