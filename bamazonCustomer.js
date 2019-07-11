@@ -66,7 +66,12 @@ function makePurchase () {
 
         .then (function (answer) {
             console.log("You Picked " + answer.whatItem);
-            console.log ("You want to purchase " + answer.qty);  
+            console.log ("You want to purchase " + answer.qty); 
+            
+            var item = answer.whatItem; 
+            var qty = answer.qty; 
+
+            console.log("you want item " + item + " you want " + qty); 
         })
 }
 
