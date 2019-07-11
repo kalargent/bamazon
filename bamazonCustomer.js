@@ -31,8 +31,8 @@ function productDisplay () {
         // var productList = []; 
         for (var i = 0; i < result.length; i++)
             // console.log(result[i].product_name); 
-            productList.push(result[i].item_id, result[i].product_name); 
-            console.log(productList); 
+            console.log(result[i].item_id, result[i].product_name, result[i].department_name, result[i].price, result[i].stock_quantity); 
+            // console.log(productList); 
     }) 
 }
 
