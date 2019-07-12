@@ -87,9 +87,13 @@ function productDisplay() {
 
       var item = answer.whatItem;
       var qty = answer.qty;
+      var total = result[item].price * qty; 
 
-      if (result[item].stock_quantity >= qty) { 
+      if (result[item].stock_quantity < qty) { 
           console.log ("We don't have that many!")
+      }
+      else {
+          console.log(qty + " of items will cost " + total); 
       }
     });
   });
