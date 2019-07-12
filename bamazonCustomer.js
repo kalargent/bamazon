@@ -48,7 +48,8 @@ function productDisplay() {
         result[i].item_id + " | ",
         result[i].product_name + " | ",
         result[i].department_name + " | ",
-        result[i].price + " | "
+        result[i].price + " | ",
+        result[i].stock_quantity
       );
     //   itemID = result[i].item_id ;
     //   productList.push(
@@ -87,7 +88,7 @@ function productDisplay() {
       var item = answer.whatItem;
       var qty = answer.qty;
 
-      if (res[item].stock_quantity <= qty) { 
+      if (result[item].stock_quantity >= qty) { 
           console.log ("We don't have that many!")
       }
     });
