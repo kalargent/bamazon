@@ -51,22 +51,9 @@ function productDisplay() {
         result[i].price + " | ",
         result[i].stock_quantity
       );
-    //   itemID = result[i].item_id ;
-    //   productList.push(
-    //     result[i].item_id,
-    //     result[i].product_name,
-    //     result[i].department_name,
-    //     result[i].price,
-    //     result[i].stock_quantity
-    //   );
       
     }
-
-    // console.log(productList); 
-    // for (var i = 0; i < productList; i++) {
-    //     console.log(productList[i].item_id); 
-    // }
-
+    
     inquirer
     .prompt([
       {
@@ -82,18 +69,31 @@ function productDisplay() {
     ])
 
     .then(function(answer) {
-      // console.log("You Picked " + answer.whatItem);
-      // console.log ("You want to purchase " + answer.qty);
 
-      var item = answer.whatItem;
+      var item = (answer.whatItem)-1;
+      var itemPick = answer.whatItem; 
       var qty = answer.qty;
       var total = result[item].price * qty; 
 
       if (result[item].stock_quantity < qty) { 
           console.log ("We don't have that many!")
+          productDisplay(); 
       }
       else {
-          console.log(qty + " of items will cost " + total); 
+          console.log(qty + " " + result[item].product_name + "s" + " " + total); 
+
+          connection.query ("UPDATE products SET stock_quantity=? WHERE item_id=?", [
+          (result[item].stock_quantity - qty), 
+          itemPick, 
+          ], 
+          function (err, newInv){
+              if (err) throw err 
+            //   console.log(newInv); 
+            //   console.log(this.sql); 
+            productDisplay(); 
+          }
+            
+          ); 
       }
     });
   });
