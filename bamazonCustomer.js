@@ -22,7 +22,7 @@ var productList = [];
 
 productDisplay();
 
-// RETRIEVE A LIST OF PRODUCTS AND SAVING THEIR NAMES TO AN EMPTY ARRAY
+// RETRIEVE A LIST OF PRODUCTS AND SAVING THEIR NAMES TO AN EMPTY ARRAY AND LOGGING THEM 
 function productDisplay() {
   var query = "SELECT * FROM products";
   connection.query(query, function(err, result) {
