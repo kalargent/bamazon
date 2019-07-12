@@ -19,6 +19,7 @@ connection.connect(function(err) {
 
 // GLOBAL VARIABLES
 var productList = [];
+var itemID = 0; 
 
 productDisplay();
 
@@ -49,21 +50,23 @@ function productDisplay() {
         result[i].department_name + " | ",
         result[i].price + " | "
       );
-      productList.push(
-        result[i].item_id,
-        result[i].product_name,
-        result[i].department_name,
-        result[i].price,
-        result[i].stock_quantity
-      );
+    //   itemID = result[i].item_id ;
+    //   productList.push(
+    //     result[i].item_id,
+    //     result[i].product_name,
+    //     result[i].department_name,
+    //     result[i].price,
+    //     result[i].stock_quantity
+    //   );
+      
     }
-    console.log(productList);
-    makePurchase();
-  });
-}
 
-function makePurchase() {
-  inquirer
+    // console.log(productList); 
+    // for (var i = 0; i < productList; i++) {
+    //     console.log(productList[i].item_id); 
+    // }
+
+    inquirer
     .prompt([
       {
         name: "whatItem",
@@ -84,9 +87,38 @@ function makePurchase() {
       var item = answer.whatItem;
       var qty = answer.qty;
 
-      console.log("you want item " + item + " you want " + qty);
+      if (res[item].stock_quantity <= qty) { 
+          console.log ("We don't have that many!")
+      }
     });
+  });
 }
+
+// function makePurchase() {
+//   inquirer
+//     .prompt([
+//       {
+//         name: "whatItem",
+//         type: "input",
+//         message: "Enter the Item Number for the item you'd like to purchase!"
+//       },
+//       {
+//         name: "qty",
+//         type: "input",
+//         message: "How many do you want?"
+//       }
+//     ])
+
+//     .then(function(answer) {
+//       // console.log("You Picked " + answer.whatItem);
+//       // console.log ("You want to purchase " + answer.qty);
+
+//       var item = answer.whatItem;
+//       var qty = answer.qty;
+
+//       console.log("you want item " + item + " you want " + qty);
+//     });
+// }
 
 // function welcome () {
 //     inquirer
