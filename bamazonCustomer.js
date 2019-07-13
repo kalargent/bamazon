@@ -19,11 +19,11 @@ connection.connect(function(err) {
 
 // GLOBAL VARIABLES
 var productList = [];
-var itemID = 0; 
+var itemID = 0;
 
 productDisplay();
 
-// RETRIEVE A LIST OF PRODUCTS AND SAVING THEIR NAMES TO AN EMPTY ARRAY AND LOGGING THEM 
+// RETRIEVE A LIST OF PRODUCTS AND SAVING THEIR NAMES TO AN EMPTY ARRAY AND LOGGING THEM
 function productDisplay() {
   var query = "SELECT * FROM products";
   connection.query(query, function(err, result) {
@@ -51,51 +51,108 @@ function productDisplay() {
         result[i].price + " | ",
         result[i].stock_quantity
       );
-      
     }
-    
+
     inquirer
-    .prompt([
-      {
-        name: "whatItem",
-        type: "input",
-        message: "Enter the Item Number for the item you'd like to purchase!"
-      },
-      {
-        name: "qty",
-        type: "input",
-        message: "How many do you want?"
-      }
-    ])
+      .prompt([
+        {
+          name: "whatItem",
+          type: "input",
+          message: "Enter the Item Number for the item you'd like to purchase!"
+        },
+        {
+          name: "qty",
+          type: "input",
+          message: "How many do you want?"
+        }
+      ])
 
-    .then(function(answer) {
+      .then(function(answer) {
+        var item = answer.whatItem - 1;
+        var itemPick = answer.whatItem;
+        var qty = answer.qty;
+        var total = result[item].price * qty;
 
-      var item = (answer.whatItem)-1;
-      var itemPick = answer.whatItem; 
-      var qty = answer.qty;
-      var total = result[item].price * qty; 
+        if (result[item].stock_quantity < qty) {
+          console.log("We don't have that many!");
+          inquirer
+            .prompt([
+              {
+                name: "buySomethingElse",
+                message: "Want to try purchasing something else?",
+                type: "confirm"
+              }
+            ])
+            .then(function(answer) {
+              // console.log(answer);
+              if (answer.buySomethingElse) {
+                productDisplay();
+              } else {
+                console.log("Maybe next time.");
+                connection.end();
+              }
+            });
 
-      if (result[item].stock_quantity < qty) { 
-          console.log ("We don't have that many!")
-          productDisplay(); 
-      }
-      else {
-          console.log(qty + " " + result[item].product_name + "s" + " " + total); 
+          // productDisplay();
+        } else {
+          inquirer
+            .prompt([
+              {
+                name: "enoughStock",
+                message:
+                  "Are you sure you want to purchase " +
+                  qty +
+                  " " +
+                  result[item].product_name +
+                  "'s " +
+                  total,
+                type: "confirm"
+              }
+            ])
+            .then(function(answer) {
+              if (answer.enoughStock) {
+                console.log(
+                  "Great! Your " +
+                    qty +
+                    " " +
+                    result[item].product_name +
+                    "'s will be delivered in 3-5 business"
+                );
+              } else {
+                console.log("you don't want it");
+              }
 
-          connection.query ("UPDATE products SET stock_quantity=? WHERE item_id=?", [
-          (result[item].stock_quantity - qty), 
-          itemPick, 
-          ], 
-          function (err, newInv){
-              if (err) throw err 
-            //   console.log(newInv); 
-            //   console.log(this.sql); 
-            productDisplay(); 
-          }
-            
-          ); 
-      }
-    });
+              inquirer
+                .prompt([
+                  {
+                    name: "buySomethingElse",
+                    message: "Want to try purchasing something else?",
+                    type: "confirm"
+                  }
+                ])
+                .then(function(answer) {
+                  // console.log(answer);
+                  if (answer.buySomethingElse) {
+                    productDisplay();
+                  } else {
+                    console.log("Maybe next time.");
+                    connection.end();
+                  }
+                });
+            });
+
+          connection.query(
+            "UPDATE products SET stock_quantity=? WHERE item_id=?",
+            [result[item].stock_quantity - qty, itemPick],
+            function(err, newInv) {
+              if (err) throw err;
+              //   console.log(newInv);
+              //   console.log(this.sql);
+              //   productDisplay();
+            }
+          );
+        }
+      });
   });
 }
 
