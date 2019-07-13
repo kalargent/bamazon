@@ -1,7 +1,8 @@
 // INCLUDING NPM PACKAGES
 var mysql = require("mysql");
 var inquirer = require("inquirer");
-var Table = require("cli-table2");
+// var Table = require("cli-table2");
+require("console.table"); 
 
 // DATABASE CONNECTION VAR AND FUNCTION
 var connection = mysql.createConnection({
@@ -40,18 +41,28 @@ function productDisplay() {
     console.log("");
     console.log("");
 
-    // var productList = [];
+    // if (!productList) {
+    productList = [];   
     for (var i = 0; i < result.length; i++) {
       // console.log(result[i].product_name);
       // console.log(i);
-      console.log(
-        result[i].item_id + " | ",
-        result[i].product_name + " | ",
-        result[i].department_name + " | ",
-        result[i].price + " | ",
-        result[i].stock_quantity
-      );
-    }
+      // console.log(
+      //   result[i].item_id + " | ",
+      //   result[i].product_name + " | ",
+      //   result[i].department_name + " | ",
+      //   result[i].price + " | ",
+      //   result[i].stock_quantity
+      // );
+      var productObject = {
+        item_id: result[i].item_id,
+        product_name: result[i].product_name,
+        department: result[i].department_name,
+        price: result[i].price,
+        stock_quantity: result[i].stock_quantity
+      }
+      productList.push(productObject); 
+        }
+      console.table(productList); 
 
     inquirer
       .prompt([
@@ -75,6 +86,7 @@ function productDisplay() {
 
         if (result[item].stock_quantity < qty) {
           console.log("We don't have that many!");
+
           inquirer
             .prompt([
               {
@@ -155,41 +167,3 @@ function productDisplay() {
       });
   });
 }
-
-// function makePurchase() {
-//   inquirer
-//     .prompt([
-//       {
-//         name: "whatItem",
-//         type: "input",
-//         message: "Enter the Item Number for the item you'd like to purchase!"
-//       },
-//       {
-//         name: "qty",
-//         type: "input",
-//         message: "How many do you want?"
-//       }
-//     ])
-
-//     .then(function(answer) {
-//       // console.log("You Picked " + answer.whatItem);
-//       // console.log ("You want to purchase " + answer.qty);
-
-//       var item = answer.whatItem;
-//       var qty = answer.qty;
-
-//       console.log("you want item " + item + " you want " + qty);
-//     });
-// }
-
-// function welcome () {
-//     inquirer
-//         .prompt ([
-//             {
-//                 name: "welcome",
-//                 type: "list",
-//                 message: "Welcome to Bamazon! Here are today's Thunderbolt Deals! What would you like to purchase?",
-//                 choices:
-//             }
-//         ])
-// }
