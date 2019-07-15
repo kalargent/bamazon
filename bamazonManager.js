@@ -152,8 +152,42 @@ function addNew () {
                 name: "prodName", 
                 type: "input", 
                 message: "What is the name of the product you want to add?"
-            }
+            },
+            
+            {
+                name: "dept", 
+                type: "input", 
+                message: "What Department does this product belong in?"
+            },
+
+            {
+                name: "price", 
+                type: "input", 
+                message: "How much does the product cost?"
+            },
+
+            {
+                name: "qty", 
+                type: "input", 
+                message: "How many products do you have to sell?"
+            } 
+
         ])
+        .then (function(answer) {
+            var product_name = answer.prodName; 
+            var department_name = answer.dept; 
+            var price = answer.price; 
+            var stock_quantity = answer.qty; 
+
+            var query = "INSERT INTO products (product_name, department_name, price, stock_quantity VALUES (?, ?, ?, ?)";
+            
+
+            console.log(query)
+
+            connection.query (query, [product_name, department_name, price, stock_quantity], function (err, res) { 
+                if (err) throw err; 
+            })
+        })
     // CONNECT TO THE DATABASE 
     // RUN AN UPDATE STATEMENT TO ADD THE NEW PRODUCT 
     // SUCCESS MESSAGE 
