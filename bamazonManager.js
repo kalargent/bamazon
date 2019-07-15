@@ -14,5 +14,14 @@ var connection = mysql.createConnection({
   
   connection.connect(function(err) {
     if (err) throw err;
-    console.log ("You're a manager!");
+    // console.log ("You're a manager!");
   });
+
+  // GLOBAL VARIABLES
+var productList = [];
+
+managerConsole(); 
+
+function managerConsole () { 
+    console.log ("manager console"); 
+}
