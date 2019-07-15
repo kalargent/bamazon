@@ -22,6 +22,7 @@ var productList = [];
 
 managerConsole();
 
+// FUNCTION WELCOMING THE  USER TO THE MANAGER CONSOLE AND ASKING WHAT THEY'D LIKE TO DO
 function managerConsole() {
   // console.log ("manager console");
   console.log("");
@@ -55,15 +56,24 @@ function managerConsole() {
           doneViewing(); 
           break;
 
+        case "View Low Inventory": 
+            console.log("view low inv"); 
+            break;
+
         case "Add to Inventory": 
             // console.log("ADDING TO INVENTORY"); 
             addInventory(); 
+            break; 
+
+        case "Add a New Product": 
+            // console.log("adding new product");
+            addNew();  
             break; 
       }
     });
 }
 
-
+//FUNCTION TO DISPLAY A LIST OF PRODUCTS 
 function viewProducts() { 
     productList = []; 
 
@@ -93,6 +103,7 @@ function viewProducts() {
     
 }
 
+// FUNCTION TO CLOSE THE LIST OF PRODUCTS WHEN THE USER IS DONE LOOKING AT THEM
 function doneViewing () { 
 
     viewProducts(); 
@@ -119,9 +130,31 @@ function doneViewing () {
         })
 }; 
 
+//FUNCTION THAT ALLOWS THE USER TO ADD INVENTORY 
 function addInventory () { 
-    console.log ("you're adding inventory!"); 
+    // console.log ("you're adding inventory!"); 
 
     viewProducts(); 
+
+    // INQUIRER PROMPT ASKING THEM WHICH PRODUCT THEY WOULD LIKE TO UPDATE THE INVENTORY FOR 
+    // ANSWER COMPARED TO LIST OF PRODUCTS 
+    // CONNECT TO THE DB AND RUN AN UPDATE STATEMENT 
+    // SUCCESS MESSAGE 
     
+}
+
+function addNew () { 
+    console.log("ADDING NEW"); 
+    // INQUIRER PROMPT FOR THE PRODUCT NAME, DEPARTMENT, PRICE, QTY 
+    inquirer   
+        .prompt ([
+            {
+                name: "prodName", 
+                type: "input", 
+                message: "What is the name of the product you want to add?"
+            }
+        ])
+    // CONNECT TO THE DATABASE 
+    // RUN AN UPDATE STATEMENT TO ADD THE NEW PRODUCT 
+    // SUCCESS MESSAGE 
 }
