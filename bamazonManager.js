@@ -54,6 +54,11 @@ function managerConsole() {
         //   console.log("You sure want to " + toDo);
           viewProducts(); 
           break;
+
+        case "Add to Inventory": 
+            // console.log("ADDING TO INVENTORY"); 
+            addInventory(); 
+            break; 
       }
     });
 }
@@ -104,4 +109,9 @@ function viewProducts() {
             })
     })
     
+}
+
+function addInventory () { 
+    console.log ("you're adding inventory!"); 
+
 }
