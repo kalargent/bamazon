@@ -41,8 +41,10 @@ function productDisplay() {
     console.log("");
     console.log("");
 
-    // if (!productList) {
+    // EMPTIES THE PRODUCT LIST VALUE 
     productList = [];   
+
+    // LOOP THROUGH RESULTS AND CREATE A PRODUCT OBJECT
     for (var i = 0; i < result.length; i++) {
       // console.log(result[i].product_name);
       // console.log(i);
@@ -60,10 +62,15 @@ function productDisplay() {
         price: result[i].price,
         stock_quantity: result[i].stock_quantity
       }
+
+      //PUSH THE PRODUCT OBJECT TO THE VARIABLE
       productList.push(productObject); 
         }
+      
+        // DISPLAY A LIST OF PRODUCTS 
       console.table(productList); 
 
+    // ASK THE USER WHAT THEY'D LIKE TO BUY AND HOW MANY 
     inquirer
       .prompt([
         {
@@ -84,9 +91,11 @@ function productDisplay() {
         var qty = answer.qty;
         var total = result[item].price * qty;
 
+        // CHECK STOCK QUANTITY
         if (result[item].stock_quantity < qty) {
           console.log("We don't have that many!");
 
+          // ASK FOR ANOTHER PURCHASE 
           inquirer
             .prompt([
               {
@@ -105,7 +114,7 @@ function productDisplay() {
               }
             });
 
-          // productDisplay();
+          // CONFIRM THEIR PURCHASE 
         } else {
           inquirer
             .prompt([
@@ -134,6 +143,7 @@ function productDisplay() {
                 console.log("\n Ok! Maybe Next Time. \n");
               }
 
+              // CHECK IF THEY WANT TO BUY SOMETHING ELSE 
               inquirer
                 .prompt([
                   {
@@ -147,20 +157,19 @@ function productDisplay() {
                   if (answer.buySomethingElse) {
                     productDisplay();
                   } else {
-                    console.log("Maybe next time.");
+                    console.log("\n Thanks for shopping with Bamazon! Be sure to check back tomorrow for more THUNDERBOLT deals! \n");
                     connection.end();
                   }
                 });
             });
 
+
+          // CONNECT TO THE DB AND REMOVE THE NUMBER FROM THE STOCK  
           connection.query(
             "UPDATE products SET stock_quantity=? WHERE item_id=?",
             [result[item].stock_quantity - qty, itemPick],
-            function(err, newInv) {
+            function(err) {
               if (err) throw err;
-              //   console.log(newInv);
-              //   console.log(this.sql);
-              //   productDisplay();
             }
           );
         }
