@@ -75,41 +75,43 @@ function managerConsole() {
 
 //FUNCTION TO DISPLAY A LIST OF PRODUCTS 
 function viewProducts() { 
-    productList = []; 
-
-    var query = "SELECT * FROM products"; 
-
-    connection.query (query, function(err, result) {
-        if (err) throw err;  
-
-        for (var i = 0; i < result.length; i++) { 
-            var productObject = { 
-                item_id: result[i].item_id, 
-                product_name: result[i].product_name, 
-                department: result[i].department_name, 
-                price: result[i].price, 
-                stock_quantity: result[i].stock_quantity
-            }
-            productList.push(productObject); 
-
-        }
-
-        console.log(""); 
-        console.log("");
-        console.log("\n Here's a list of all the products currently on sale at Bamazon. \n"); 
-        console.table(productList); 
-
-    })
     
+    return new Promise( function(resolve, reject) {
+        productList = []; 
+
+        var query = "SELECT * FROM products"; 
+
+        connection.query (query, function(err, result) {
+            if (err) throw err;  
+
+            for (var i = 0; i < result.length; i++) { 
+                var productObject = { 
+                    item_id: result[i].item_id, 
+                    product_name: result[i].product_name, 
+                    department: result[i].department_name, 
+                    price: result[i].price, 
+                    stock_quantity: result[i].stock_quantity
+                }
+                productList.push(productObject); 
+
+            }
+
+            console.log(""); 
+            console.log("");
+            console.log("\n Here's a list of all the products currently on sale at Bamazon. \n"); 
+            console.table(productList); 
+            resolve(); 
+
+        })
+    })
 }
 
 // FUNCTION TO CLOSE THE LIST OF PRODUCTS WHEN THE USER IS DONE LOOKING AT THEM
 function doneViewing () { 
 
-    viewProducts(); 
-    // console.log("you're in doneViewing"); 
-
-    inquirer
+    viewProducts()
+        .then (function(result) {
+            inquirer
         .prompt ([
             {
                 name: "doneViewing", 
@@ -128,6 +130,8 @@ function doneViewing () {
                 connection.end(); 
             }
         })
+        }) 
+    
 }; 
 
 //FUNCTION THAT ALLOWS THE USER TO ADD INVENTORY 
