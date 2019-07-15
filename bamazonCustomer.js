@@ -116,7 +116,7 @@ function productDisplay() {
                   qty +
                   " " +
                   result[item].product_name +
-                  "'s " +
+                  "'s for a total of " +
                   total,
                 type: "confirm"
               }
@@ -124,14 +124,14 @@ function productDisplay() {
             .then(function(answer) {
               if (answer.enoughStock) {
                 console.log(
-                  "Great! Your " +
+                  "\n GET EXCITED!! Your " +
                     qty +
                     " " +
                     result[item].product_name +
-                    "'s will be delivered in 3-5 business"
+                    "'s will be delivered in 3-5 business days! \n"
                 );
               } else {
-                console.log("you don't want it");
+                console.log("\n Ok! Maybe Next Time. \n");
               }
 
               inquirer
