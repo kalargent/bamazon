@@ -187,16 +187,14 @@ function addNew () {
             var price = parseFloat(answer.price); 
             var stock_quantity = parseInt(answer.qty); 
 
-            var query = "INSERT INTO products (product_name, department_name, price, stock_quantity VALUES (?, ?, ?, ?)";
+            var query = "INSERT INTO products (product_name, department_name, price, stock_quantity) VALUES (?, ?, ?, ?)";
             
 
             console.log(query)
 
             connection.query (query, [product_name, department_name, price, stock_quantity], function (err, res) { 
                 if (err) throw err; 
+                console.log("Successfully added a new product to the store!")
             })
         })
-    // CONNECT TO THE DATABASE 
-    // RUN AN UPDATE STATEMENT TO ADD THE NEW PRODUCT 
-    // SUCCESS MESSAGE 
 }
