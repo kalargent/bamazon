@@ -63,6 +63,7 @@ function managerConsole() {
     });
 }
 
+
 function viewProducts() { 
     productList = []; 
 
@@ -88,7 +89,33 @@ function viewProducts() {
         console.log("\n Here's a list of all the products currently on sale at Bamazon. \n"); 
         console.table(productList); 
 
-        inquirer
+        doneViewing(); 
+
+        // inquirer
+        //     .prompt ([
+        //         {
+        //             name: "doneViewing", 
+        //             type: "confirm", 
+        //             message: "Do you want to complete another task?"
+
+        //         }
+            
+        //     ])
+        //     .then (function(answer) { 
+        //         if (answer.doneViewing) { 
+        //             managerConsole(); 
+        //         }
+        //         else { 
+        //             console.log("\n OK! Have a great day, Ms. Manager! \n"); 
+        //             connection.end(); 
+        //         }
+        //     })
+    })
+    
+}
+
+function doneViewing () { 
+    inquirer
             .prompt ([
                 {
                     name: "doneViewing", 
@@ -107,11 +134,11 @@ function viewProducts() {
                     connection.end(); 
                 }
             })
-    })
-    
-}
+}; 
 
 function addInventory () { 
     console.log ("you're adding inventory!"); 
 
+    viewProducts(); 
+    
 }
