@@ -57,7 +57,7 @@ function managerConsole() {
           break;
 
         case "View Low Inventory": 
-            console.log("view low inv"); 
+            lowInventory(); 
             break;
 
         case "Add to Inventory": 
@@ -134,6 +134,10 @@ function doneViewing () {
     
 }; 
 
+function lowInventory () {
+    console.log ("you're in low inventory!"); 
+}
+
 //FUNCTION THAT ALLOWS THE USER TO ADD INVENTORY 
 function addInventory () { 
     // console.log ("you're adding inventory!"); 
@@ -180,8 +184,8 @@ function addNew () {
         .then (function(answer) {
             var product_name = answer.prodName; 
             var department_name = answer.dept; 
-            var price = answer.price; 
-            var stock_quantity = answer.qty; 
+            var price = parseFloat(answer.price); 
+            var stock_quantity = parseInt(answer.qty); 
 
             var query = "INSERT INTO products (product_name, department_name, price, stock_quantity VALUES (?, ?, ?, ?)";
             
