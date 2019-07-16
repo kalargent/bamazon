@@ -164,7 +164,17 @@ function productDisplay() {
               if (err) throw err;
             }
           );
-        }
+
+          //CONNECT TO THE DB AND ADD THE TOTAL TO PRODUCT_SALES 
+          var query = "UPDATE products SET product_sales = product_sales + ? WHERE item_id = ?"
+          connection.query (query, [total, itemPick], function(err, res){
+            if (err) throw err; 
+            // console.log("updated product sales!"); 
+            // console.log (total, itemPick); 
+          }
+            
+          )
+          }
       });
   });
 }
