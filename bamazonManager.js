@@ -156,29 +156,23 @@ function lowInventory () {
         }
         console.log("\n\n The following product have less than 25 in stock. \n")
         console.table(lowInv); 
+
+        inquirer
+            .prompt ([
+                {
+                name: "upInv", 
+                type: "confirm", 
+                message: "Do you want to update the inventory for an item?"
+                }
+            ])
+            .then (function (ans) { 
+                if (ans.upInv) {
+                    console.log("great! pick an item")
+                }
+            })
     })
 
 } 
-//     console.log ("you're in low inventory!"); 
-//     var query = "SELECT * FROM Products WHERE stock_quantity < 25"
-//     var lowInv = []; 
-
-//     connection.query (query, function (err, res) {
-//         if (err) return err; 
-//         console.log(res); 
-
-//         for (var i = 0; i < res.length; i++) {}
-//             var lowInvObject = {
-//                 item_id: res[i].item_id,
-//                 product_name: res[i].product_name,
-//                 department: res[i].department_name,
-//                 price: res[i].price,
-//                 stock_quantity: res[i].stock_quantity
-//             }
-
-//             lowInv.push(lowInvObject); 
-//     }
-// }
 
 //FUNCTION THAT ALLOWS THE USER TO ADD INVENTORY 
 function addInventory () { 
