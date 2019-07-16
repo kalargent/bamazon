@@ -26,18 +26,27 @@ function start () {
     inquirer
         .prompt([
             {
-                name: "viewTotals", 
-                type: "confirm", 
-                message: "\n Hello, supervisor! Would you like to view a list of total profits per department? \n"
+                name: "supervisor", 
+                type: "list", 
+                message: "Hello, supervisor! What would you like to do? \n", 
+                choices: ["Check Product Sales by Department","Add a New Department"]
             }
         ])
 
         .then (function(ans) {
-            if (ans.viewTotals) { 
-                console.log ("this is where the table would display"); 
-            }
-            else {
-                connection.end(); 
+            var answer = ans.supervisor
+            
+            switch (answer) {
+                case "Check Product Sales by Department":
+                    console.log("sales"); 
+                    break; 
+                case "Add a New Department": 
+                    console.log("new department")
+                    break; 
             }
         })
+}
+
+function totalProfits () { 
+    console.log("hello i am total profits"); 
 }
