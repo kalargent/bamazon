@@ -52,7 +52,7 @@ function productDisplay() {
         product_name: result[i].product_name,
         department: result[i].department_name,
         price: result[i].price,
-        stock_quantity: result[i].stock_quantity
+        // stock_quantity: result[i].stock_quantity
       }
 
       //PUSH THE PRODUCT OBJECT TO THE VARIABLE
