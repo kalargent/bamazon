@@ -1,75 +1,118 @@
-var mysql = require("mysql"); 
-var inquirer = require("inquirer"); 
-require ("console.table"); 
+var mysql = require("mysql");
+var inquirer = require("inquirer");
+require("console.table");
 
 var connection = mysql.createConnection({
-    host: "localhost", 
-    port: 3306, 
-    user: "root", 
-    password: "", 
-    database: "bamazon"
-}); 
+  host: "localhost",
+  port: 3306,
+  user: "root",
+  password: "",
+  database: "bamazon"
+});
 
-connection.connect(function (err) { 
-    if (err) throw err; 
-    // console.log("you're a supervisor!")
-})
+connection.connect(function(err) {
+  if (err) throw err;
+  // console.log("you're a supervisor!")
+});
 
-start(); 
+start();
 
-function start () { 
-    console.log(
-      "\n \n _.~'~._.~'~._.~ WELCOME TO BAMAZON'S SUPERVISOR CONSOLE! ~._.~'~._.~'~._ \n \n"
-    );
+function start() {
+  console.log(
+    "\n \n _.~'~._.~'~._.~ WELCOME TO BAMAZON'S SUPERVISOR CONSOLE! ~._.~'~._.~'~._ \n \n"
+  );
 
+  inquirer
+    .prompt([
+      {
+        name: "supervisor",
+        type: "list",
+        message: "Hello, supervisor! What would you like to do? \n",
+        choices: ["Check Product Sales by Department", "Add a New Department"]
+      }
+    ])
 
-    inquirer
+    .then(function(ans) {
+      var answer = ans.supervisor;
+
+      switch (answer) {
+        case "Check Product Sales by Department":
+          // console.log("sales");
+          totalProfits();
+          break;
+        case "Add a New Department":
+        //   console.log("new department");
+        newDept(); 
+          break;
+      }
+    });
+}
+
+function totalProfits() {
+  // console.log("hello i am total profits");
+  // var query = "SELECT departments.dept_id, departments.dept_name, departments.over_head_cost, products.product_sales" +
+  // "FROM products" +
+  // "INNER JOIN departments ON products.department_name=departments.dept_name";
+  var query =
+    "SELECT departments.dept_id, departments.department_name, departments.over_head_cost, products.product_sales FROM products RIGHT JOIN departments ON products.department_name=departments.department_name";
+
+  connection.query(query, function(err, res) {
+    if (err) throw err;
+    // console.log(res);
+    var data = [];
+
+    for (var i = 0; i < res.length; i++) {
+      var deptData = {
+        dept_id: res[i].dept_id,
+        department_name: res[i].department_name,
+        over_head_cost: res[i].over_head_cost,
+        product_sales: res[i].product_sales
+      };
+      data.push(deptData);
+    }
+    console.table(data);
+  });
+}
+
+function newDept () { 
+    console.log("new dept"); 
+    inquirer    
         .prompt([
             {
-                name: "supervisor", 
-                type: "list", 
-                message: "Hello, supervisor! What would you like to do? \n", 
-                choices: ["Check Product Sales by Department","Add a New Department"]
+                name:"newDeptName", 
+                type: "input", 
+                message: "What is the name of the department you want to add?"
+            }, 
+            {
+                name: "overhead", 
+                type: "input", 
+                message: "What are the Overhead Costs for the Department?"
             }
         ])
+        .then (function (ans) {
+            var dept = ans.newDeptName; 
+            var oh = ans.overhead
 
-        .then (function(ans) {
-            var answer = ans.supervisor
-            
-            switch (answer) {
-                case "Check Product Sales by Department":
-                    // console.log("sales"); 
-                    totalProfits(); 
-                    break; 
-                case "Add a New Department": 
-                    console.log("new department")
-                    break; 
-            }
+            console.log(dept); 
+            console.log(oh); 
+
+            var query = "INSERT INTO departments (department_name, over_head_cost) VALUES (? , ?)";
+
+            connection.query (query, [dept, oh], function (err, res) {
+                if (err) throw err; 
+                console.log("added!"); 
+            })
         })
 }
 
-function totalProfits () { 
-    console.log("hello i am total profits"); 
-    // var query = "SELECT departments.dept_id, departments.dept_name, departments.over_head_cost, products.product_sales" +
-    // "FROM products" + 
-    // "INNER JOIN departments ON products.department_name=departments.dept_name"; 
-    var query = "SELECT departments.dept_id, departments.department_name, departments.over_head_cost, products.product_sales FROM products RIGHT JOIN departments ON products.department_name=departments.department_name"
+// var dept = ans.newDeptName; 
+            // var oh = ans.overhead
 
-    connection.query (query, function (err, res) {
-        if (err) throw err;
-        // console.log(res);
-        var data = []; 
+            // console.log(dept); 
+            // console.log(oh); 
 
-        for (var i = 0; i < res.length; i++) {
-            var deptData = {
-                dept_id: res[i].dept_id, 
-                department_name: res[i].department_name,
-                over_head_cost: res[i].over_head_cost, 
-                product_sales: res[i].product_sales
+            // var query = "INSERT INTO departments (department_name, over_head_cost) VALUES (? , ?)"; 
 
-            }
-            data.push(deptData); 
-        }
-        console.table(data); 
-    })
-}
+            // connection.query (query, [dept, oh], function (err){
+            //     console.log("added"); 
+            // } )
