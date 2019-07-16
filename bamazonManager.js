@@ -40,8 +40,7 @@ function managerConsole() {
         message: "What would you like to do?",
         choices: [
           "View Products for Sale",
-          "View Low Inventory",
-          "Add to Inventory",
+          "View and Update Low Inventory",
           "Add a New Product"
         ]
       }
@@ -56,13 +55,8 @@ function managerConsole() {
           doneViewing();
           break;
 
-        case "View Low Inventory":
+        case "View and Update Low Inventory":
           lowInventory();
-          break;
-
-        case "Add to Inventory":
-          // console.log("ADDING TO INVENTORY");
-          addInventory();
           break;
 
         case "Add a New Product":
