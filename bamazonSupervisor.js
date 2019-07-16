@@ -53,8 +53,12 @@ function totalProfits() {
   // var query = "SELECT departments.dept_id, departments.dept_name, departments.over_head_cost, products.product_sales" +
   // "FROM products" +
   // "INNER JOIN departments ON products.department_name=departments.dept_name";
-  var query =
-    "SELECT departments.dept_id, departments.department_name, departments.over_head_cost, products.product_sales FROM products RIGHT JOIN departments ON products.department_name=departments.department_name";
+  var query =`
+    SELECT departments.dept_id, departments.department_name, MAX(departments.over_head_cost), SUM(products.product_sales) 
+    FROM products 
+    INNER JOIN departments ON products.department_name=departments.department_name 
+    GROUP BY dept_id, departments.department_name; 
+    `;
 
   connection.query(query, function(err, res) {
     if (err) throw err;
