@@ -46,15 +46,7 @@ function productDisplay() {
 
     // LOOP THROUGH RESULTS AND CREATE A PRODUCT OBJECT
     for (var i = 0; i < result.length; i++) {
-      // console.log(result[i].product_name);
-      // console.log(i);
-      // console.log(
-      //   result[i].item_id + " | ",
-      //   result[i].product_name + " | ",
-      //   result[i].department_name + " | ",
-      //   result[i].price + " | ",
-      //   result[i].stock_quantity
-      // );
+    
       var productObject = {
         item_id: result[i].item_id,
         product_name: result[i].product_name,

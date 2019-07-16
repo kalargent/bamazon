@@ -194,7 +194,25 @@ function addNew () {
 
             connection.query (query, [product_name, department_name, price, stock_quantity], function (err, res) { 
                 if (err) throw err; 
-                console.log("Successfully added a new product to the store!")
+                // console.log("Successfully added a new product to the store!")
             })
+
+            inquirer
+                .prompt ([
+                    {
+                        name: "anotherItem", 
+                        type: "confirm", 
+                        message: "Do you want to add another item?"
+                    }
+                ])
+
+                .then(function (ans) { 
+                        if (ans.anotherItem) { 
+                            addNew(); 
+                        }
+                        else {
+                            doneViewing(); 
+                        }
+                    })
         })
 }
