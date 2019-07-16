@@ -186,15 +186,16 @@ function addInventory() {
       }
     ])
     .then(function(ans) {
-      console.log(ans.whichOne);
-      console.log(ans.howMany);
+    //   console.log(ans.whichOne);
+    //   console.log(ans.howMany);
 
+      
       var query =
         "UPDATE products SET stock_quantity = stock_quantity + ? WHERE item_id = ?";
 
       connection.query(query, [ans.howMany, ans.whichOne], function(err, res) {
         if (err) return err;
-        console.log("updated!");
+        // console.log("updated!");
       });
 
       inquirer
