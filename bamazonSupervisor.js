@@ -38,7 +38,8 @@ function start () {
             
             switch (answer) {
                 case "Check Product Sales by Department":
-                    console.log("sales"); 
+                    // console.log("sales"); 
+                    totalProfits(); 
                     break; 
                 case "Add a New Department": 
                     console.log("new department")
@@ -49,4 +50,13 @@ function start () {
 
 function totalProfits () { 
     console.log("hello i am total profits"); 
+    // var query = "SELECT departments.dept_id, departments.dept_name, departments.over_head_cost, products.product_sales" +
+    // "FROM products" + 
+    // "INNER JOIN departments ON products.department_name=departments.dept_name"; 
+    var query = "SELECT departments.dept_id, departments.department_name, departments.over_head_cost, products.product_sales FROM products RIGHT JOIN departments ON products.department_name=departments.department_name"
+
+    connection.query (query, function (err, res) {
+        if (err) throw err;
+        console.log(res);
+    })
 }

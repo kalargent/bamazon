@@ -1,31 +1,23 @@
-DROP DATABASE IF EXISTS topsongs_DB; 
+USE bamazon; 
 
-CREATE database topsongs_DB; 
-USE topsongs_DB; 
+CREATE TABLE departments (
+    dept_id INT NOT NULL AUTO_INCREMENT, 
+    department_name VARCHAR(100), 
+    over_head_cost DECIMAL (10, 2), 
+    PRIMARY KEY (dept_id)
+); 
 
-CREATE TABLE topAlbums (
-	id INT NOT NULL, 
-    artist VARCHAR (255), 
-    album VARCHAR (255), 
-    years INT, 
-    raw_total DECIMAL (10, 5),
-    raw_usa DECIMAL (10, 5), 
-    raw_uk DECIMAL (10, 5), 
-    raw_eur DECIMAL (10, 5), 
-    raw_row DECIMAL (10, 5)
-);
 
-CREATE TABLE top5000 (
-  position INT NOT NULL,
-  artist VARCHAR(100) NULL,
-  song VARCHAR(100) NULL,
-  year INT NULL,
-  raw_total DECIMAL(10,4) NULL,
-  raw_usa DECIMAL(10,4) NULL,
-  raw_uk DECIMAL(10,4) NULL,
-  raw_eur DECIMAL(10,4) NULL,
-  raw_row DECIMAL(10,4) NULL,
-  PRIMARY KEY (position)
-);
+INSERT INTO departments (department_name, over_head_cost) 
+VALUES ("Smart Home", 500); 
 
-SELECT * FROM topAlbums 
+INSERT INTO departments (department_name, over_head_cost) 
+VALUES ("Kitchen", 600); 
+
+INSERT INTO departments (department_name, over_head_cost) 
+VALUES ("Books", 1000); 
+
+INSERT INTO departments (department_name, over_head_cost) 
+VALUES ("Electronics", 2100); 
+
+SELECT * FROM departments 
