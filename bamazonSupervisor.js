@@ -57,6 +57,19 @@ function totalProfits () {
 
     connection.query (query, function (err, res) {
         if (err) throw err;
-        console.log(res);
+        // console.log(res);
+        var data = []; 
+
+        for (var i = 0; i < res.length; i++) {
+            var deptData = {
+                dept_id: res[i].dept_id, 
+                department_name: res[i].department_name,
+                over_head_cost: res[i].over_head_cost, 
+                product_sales: res[i].product_sales
+
+            }
+            data.push(deptData); 
+        }
+        console.table(data); 
     })
 }
