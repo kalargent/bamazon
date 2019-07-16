@@ -100,19 +100,7 @@ function newDept () {
 
             connection.query (query, [dept, oh], function (err, res) {
                 if (err) throw err; 
-                console.log("added!"); 
+                console.log("New department, " + dept + ", added!"); 
             })
         })
 }
-
-// var dept = ans.newDeptName; 
-            // var oh = ans.overhead
-
-            // console.log(dept); 
-            // console.log(oh); 
-
-            // var query = "INSERT INTO departments (department_name, over_head_cost) VALUES (? , ?)"; 
-
-            // connection.query (query, [dept, oh], function (err){
-            //     console.log("added"); 
-            // } )
