@@ -196,19 +196,27 @@ function addInventory() {
         if (err) return err;
         console.log("updated!");
       });
+
+      inquirer
+        .prompt ([
+            {
+                name:"anotherOne", 
+                type: "confirm", 
+                message: "Do you want to update another item?"
+            }
+        ])
+        .then (function(ans){
+            if (ans.anotherOne) { 
+                addInventory(); 
+            }
+            else {
+                doneViewing(); 
+            }
+        })
     });
-
-  // var query = "UPDATE products SET stock_quantity = stock_quantity + ? WHERE item_id = ?"
-
-  // connection.query (query, [ans.howMany, ans.whichOne], function (err, res) {
-  //     if (err) return err;
-  //     console.log("updated!")
-  // })
-  // ANSWER COMPARED TO LIST OF PRODUCTS
-  // CONNECT TO THE DB AND RUN AN UPDATE STATEMENT
-  // SUCCESS MESSAGE
 }
 
+//FUNCTION THAT ALLOWS THE USER TO ADD A NEW PRODUCT 
 function addNew() {
   console.log("ADDING NEW");
   // INQUIRER PROMPT FOR THE PRODUCT NAME, DEPARTMENT, PRICE, QTY
