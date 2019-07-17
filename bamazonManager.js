@@ -154,7 +154,7 @@ function lowInventory() {
       ])
       .then(function(ans) {
         if (ans.upInv) {
-          console.log("great! pick an item");
+        //   console.log("great! pick an item");
           addInventory();
         }
       });
