@@ -129,7 +129,7 @@ function lowInventory() {
 
   connection.query(query, function(err, res) {
     if (err) return err;
-    console.log(res);
+    // console.log(res);
 
     for (var i = 0; i < res.length; i++) {
       var lowInvObject = {
