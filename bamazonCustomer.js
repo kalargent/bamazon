@@ -85,7 +85,7 @@ function productDisplay() {
 
         // CHECK STOCK QUANTITY
         if (result[item].stock_quantity < qty) {
-          console.log("We don't have that many!");
+          console.log("\n We don't have that many in stock. Please update your quantity or select another item. \n");
 
           // ASK FOR ANOTHER PURCHASE 
           inquirer
@@ -101,7 +101,7 @@ function productDisplay() {
               if (answer.buySomethingElse) {
                 productDisplay();
               } else {
-                console.log("Maybe next time.");
+                console.log("\n Thanks for shopping at Bamazon. Check back tomorrow for new THUNDERBOLT deals! \n");
                 connection.end();
               }
             });
