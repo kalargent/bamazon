@@ -54,7 +54,7 @@ function totalProfits() {
   // "FROM products" +
   // "INNER JOIN departments ON products.department_name=departments.dept_name";
   var query =`
-    SELECT departments.dept_id, departments.department_name, MAX(departments.over_head_cost), SUM(products.product_sales) 
+    SELECT departments.dept_id, departments.department_name, MAX(departments.over_head_cost) AS over_head_cost, SUM(products.product_sales) AS product_sales 
     FROM products 
     INNER JOIN departments ON products.department_name=departments.department_name 
     GROUP BY dept_id, departments.department_name; 
@@ -70,7 +70,8 @@ function totalProfits() {
         dept_id: res[i].dept_id,
         department_name: res[i].department_name,
         over_head_cost: res[i].over_head_cost,
-        product_sales: res[i].product_sales
+        product_sales: res[i].product_sales,
+        total_profit: parseFloat(res[i].product_sales) - parseFloat(res[i].over_head_cost)
       };
       data.push(deptData);
     }
