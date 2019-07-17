@@ -250,7 +250,7 @@ function addNew() {
       var query =
         "INSERT INTO products (product_name, department_name, price, stock_quantity) VALUES (?, ?, ?, ?)";
 
-      console.log(query);
+    //   console.log(query);
 
       connection.query(
         query,
