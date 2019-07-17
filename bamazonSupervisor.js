@@ -41,8 +41,8 @@ function start() {
           totalProfits();
           break;
         case "Add a New Department":
-        //   console.log("new department");
-        newDept(); 
+          //   console.log("new department");
+          newDept();
           break;
       }
     });
@@ -53,7 +53,7 @@ function totalProfits() {
   // var query = "SELECT departments.dept_id, departments.dept_name, departments.over_head_cost, products.product_sales" +
   // "FROM products" +
   // "INNER JOIN departments ON products.department_name=departments.dept_name";
-  var query =`
+  var query = `
     SELECT departments.dept_id, departments.department_name, MAX(departments.over_head_cost) AS over_head_cost, SUM(products.product_sales) AS product_sales 
     FROM products 
     INNER JOIN departments ON products.department_name=departments.department_name 
@@ -71,41 +71,79 @@ function totalProfits() {
         department_name: res[i].department_name,
         over_head_cost: res[i].over_head_cost,
         product_sales: res[i].product_sales,
-        total_profit: parseFloat(res[i].product_sales) - parseFloat(res[i].over_head_cost)
+        total_profit:
+          parseFloat(res[i].product_sales) - parseFloat(res[i].over_head_cost)
       };
       data.push(deptData);
     }
     console.table(data);
+
+    inquirer
+      .prompt([
+        {
+          name: "somethingElse",
+          type: "confirm",
+          message: "Would you like to do anything else today?"
+        }
+      ])
+      .then(function(ans) {
+        if (ans.somethingElse) {
+          start();
+        } else {
+          connectionEnd();
+        }
+      });
   });
 }
 
-function newDept () { 
-    console.log("new dept"); 
-    inquirer    
+function newDept() {
+  console.log("new dept");
+  inquirer
+    .prompt([
+      {
+        name: "newDeptName",
+        type: "input",
+        message: "What is the name of the department you want to add?"
+      },
+      {
+        name: "overhead",
+        type: "input",
+        message: "What are the Overhead Costs for the Department?"
+      }
+    ])
+    .then(function(ans) {
+      var dept = ans.newDeptName;
+      var oh = ans.overhead;
+
+      console.log(dept);
+      console.log(oh);
+
+      var query =
+        "INSERT INTO departments (department_name, over_head_cost) VALUES (? , ?)";
+
+      connection.query(query, [dept, oh], function(err, res) {
+        if (err) throw err;
+        // console.log("New department, " + dept + ", added!");
+      });
+      inquirer
         .prompt([
-            {
-                name:"newDeptName", 
-                type: "input", 
-                message: "What is the name of the department you want to add?"
-            }, 
-            {
-                name: "overhead", 
-                type: "input", 
-                message: "What are the Overhead Costs for the Department?"
-            }
+          {
+            name: "somethingElse",
+            type: "confirm",
+            message: "Would you like to do anything else today?"
+          }
         ])
-        .then (function (ans) {
-            var dept = ans.newDeptName; 
-            var oh = ans.overhead
+        .then(function(ans) {
+          if (ans.somethingElse) {
+            start();
+          } else {
+            connectionEnd();
+          }
+        });
+    });
+}
 
-            console.log(dept); 
-            console.log(oh); 
-
-            var query = "INSERT INTO departments (department_name, over_head_cost) VALUES (? , ?)";
-
-            connection.query (query, [dept, oh], function (err, res) {
-                if (err) throw err; 
-                console.log("New department, " + dept + ", added!"); 
-            })
-        })
+function connectionEnd() {
+  console.log("\n Have a great day!! \n");
+  connection.end();
 }
