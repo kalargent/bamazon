@@ -82,6 +82,7 @@ function productDisplay() {
         var itemPick = answer.whatItem;
         var qty = answer.qty;
         var total = result[item].price * qty;
+        var t = total.toFixed(2); 
 
         // CHECK STOCK QUANTITY
         if (result[item].stock_quantity < qty) {
@@ -118,7 +119,7 @@ function productDisplay() {
                   " " +
                   result[item].product_name +
                   "'s for a total of " +
-                  total,
+                  t,
                 type: "confirm"
               }
             ])

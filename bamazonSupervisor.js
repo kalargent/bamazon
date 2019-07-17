@@ -72,7 +72,7 @@ function totalProfits() {
         over_head_cost: res[i].over_head_cost,
         product_sales: res[i].product_sales,
         total_profit:
-          parseFloat(res[i].product_sales) - parseFloat(res[i].over_head_cost)
+          res[i].product_sales - res[i].over_head_cost
       };
       data.push(deptData);
     }
