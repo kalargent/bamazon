@@ -11,7 +11,7 @@ This activity was for week 12 of my Penn Boot Camp coursework. This week's chall
 * NPM Packages 
     * mysql
     * inquirer 
-* mySQL queries 
+* mySQL
 
 ## Features 
 
